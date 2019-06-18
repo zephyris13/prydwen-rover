@@ -1,0 +1,10 @@
+{
+  "server": "127.0.0.1",
+  "port": 1883,
+  "topicA": "controls/pan-tilt",
+  "leftChannel": 0,
+  "rightChannel": 1,
+  "leftPWMChannel": 2,
+  "rightPWMChannel": 3
+}
+
