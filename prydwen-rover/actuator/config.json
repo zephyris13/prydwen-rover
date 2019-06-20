@@ -2,9 +2,11 @@
   "server": "127.0.0.1",
   "port": 1883,
   "topicA": "controls/pan-tilt",
-  "leftChannel": 0,
-  "rightChannel": 1,
-  "leftPWMChannel": 2,
-  "rightPWMChannel": 3
+  "leftFWDChannel": "P8_10",
+  "leftRWDChannel": "P8_12",
+  "rightFWDChannel": "P8_14",
+  "rightRWDChannel": "P8_16",
+  "leftPWMChannel": "P8_13",
+  "rightPWMChannel": "P8_19"
 }
 

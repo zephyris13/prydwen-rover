@@ -18,7 +18,7 @@ class hBridgeMotor:
 		self.revChannel 	= revChannel
 
 		# setup the limitations
-		self.minDuty 		= 0
+		self.minDuty 		= 85
 		self.maxDuty		= 100
 
 	def setupMinDuty(self, duty):
