@@ -11,15 +11,22 @@ H_BRIDGE_MOTOR_REVERSE 	= 1
 class hBridgeMotor:
 	"""Class that two digital signals and a pwm signal to control an h-bridge"""
 
-	def __init__(self, pwmChannel, fwdChannel, revChannel):
+	def __init__(self, fwdChannel, rwdChannel, pwmChannel):
 		# note the channels
-		self.pwmChannel 	= pwmChannel
 		self.fwdChannel		= fwdChannel
-		self.revChannel 	= revChannel
+		self.rwdChannel 	= rwdChannel
+    self.pwmChannel 	= pwmChannel
 
 		# setup the limitations
-		self.minDuty 		= 85
+		self.minDuty 		= 0
 		self.maxDuty		= 100
+
+    GPIO.setup(self.fwdChannel, GPIO.OUT)
+    GPIO.setup(self.revChannel, GPIO.OUT)
+
+    PWM.start(pwmChannel, 0)
+    GPIO.output(self.fwdChannel, GPIO.LOW)
+    GPIO.output(self.rwdChannel, GPIO.LOW)
 
 	def setupMinDuty(self, duty):
 		"""Set the minimum allowed duty cycle for pwm"""
@@ -31,36 +38,36 @@ class hBridgeMotor:
 
 	def reset(self):
 		"""Set the PWM to 0%, disable both h-bridge controls"""
-		ret 	=  self.pwmDriver.setDutyCycle(0)
-		ret 	|= self.fwdDriver.turnOff()
-		ret 	|= self.revDriver.turnOff()
+    
+    PWM.set_duty_cycle(self.pwmChannel, 0)
+    GPIO.output(self.fwdChannel, GPIO.LOW)
+    GPIO.output(self.rwdChannel, GPIO.LOW)
 
-		return ret
+		return 0
 
 	def spin(self, direction, duty):
 		"""Set the PWM to the specified duty, and in the specified direction"""
-		ret 	= 0
 
 		# 0 - forward, 1 - reverse
-		if (direction == H_BRIDGE_MOTOR_FORWARD):
-			self.revDriver.turnOff()
-			self.fwdDriver.turnOn()
-		elif (direction == H_BRIDGE_MOTOR_REVERSE):
-			self.fwdDriver.turnOff()
-			self.revDriver.turnOn()
-		else:
-			ret 	= -1
+		# if (direction == H_BRIDGE_MOTOR_FORWARD):
+		# 	self.revDriver.turnOff()
+		# 	self.fwdDriver.turnOn()
+		# elif (direction == H_BRIDGE_MOTOR_REVERSE):
+		# 	self.fwdDriver.turnOff()
+		# 	self.revDriver.turnOn()
+		# else:
+		# 	return -1
 
-		if (ret == 0):
 			# check against the minimum and maximium pwm
-			if duty < self.minDuty:
-				duty 	= self.minDuty
-			elif duty > self.maxDuty:
-				duty 	= self.maxDuty
+    if duty < self.minDuty:
+      duty 	= self.minDuty
+    elif duty > self.maxDuty:
+      duty 	= self.maxDuty
 
-			# program the duty cycle
-			ret 	= self.pwmDriver.setDutyCycle(duty)
-		return ret
+    # program the duty cycle
+    PWM.set_duty_cycle(self.pwmChannel, duty)
+
+		return 0
 
 	def spinForward(self, duty):
 		ret 	= self.spin(H_BRIDGE_MOTOR_FORWARD, duty)

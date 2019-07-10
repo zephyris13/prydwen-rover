@@ -39,7 +39,7 @@ def __main__():
 	## setup mqtt
 	mqttc = mqtt.Client()
   try:
-    robot = robotControl.robotControl(config['leftFWDChannel'], config['leftRWDChannel'], config['rightFWDChannel'], config['rightRWDChannel'], config['leftPWMChannel'], config['rightPWMChannel'])
+    robot = robotControl.robotControl(config['leftFWDChannel'], config['leftRWDChannel'], config['rightFWDChannel'], config['rightRWDChannel'], config['leftPWMChannel'], config['rightPWMChannel'], config['minPWM'], config['maxPWM'])
   except:
     print("ERROR: config file must contain settings for 'leftFWDChannel', 'leftRWDChannel', 'rightFWDChannel', 'rightRWDChannel', 'leftPWMChannel', and 'rightPWMChannel'")
     sys.exit(2)
@@ -72,8 +72,8 @@ def __main__():
 	        if len(data) == 4:
 	            # double check which value is which! might have been switched!
               # Left, Right, Left%, Right%
-	            print "Received directions (%d, %d), with Speed % (%d, %d)"%(int(data[0]), int(data[1], int(data[2])))
-	            robot.move(int(data[0]), int(data[1], int(data[2]))
+	            print "Received directions (%d, %d), with Speed % (%d, %d)"%(int(data[0]), int(data[1]), int(data[2]), int(data[3]))
+	            robot.move(int(data[0]), int(data[1]), int(data[2]), int(data[3]))
 	        else:
 	            print("Invalid number of arguments received")
 
