@@ -1,8 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
@@ -78,6 +76,7 @@ class TurretControls extends Component {
       default:
         return false;
     }
+    return false;
   }
 
   render() {
@@ -85,8 +84,7 @@ class TurretControls extends Component {
       <Paper className="Controls">
         <p>Controls</p>
 
-        <Grid item xs={12}>
-        
+        <Grid item xs={12} style={{ paddingBottom: "40px" }}>     
           <Grid item xs={12}>
             <Button color="default" onMouseDown={() => { this.handleMouseDown(0); }} onMouseUp={() => { this.handleMouseUp(0); }}>
               <ExpandLess/>
@@ -111,20 +109,6 @@ class TurretControls extends Component {
             <Button color="default" onMouseDown={() => { this.handleMouseDown(2); }} onMouseUp={() => { this.handleMouseUp(2); }}>
               <ExpandMore/>
             </Button>
-          </Grid>
-
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Switch
-                  color="secondary"
-                  checked={this.state.spoolupChecked}
-                  onChange={this.handleChange("spoolupChecked")}
-                  value=""
-                />
-              }
-              label="Spool Up"
-            />
           </Grid>
 
         </Grid>

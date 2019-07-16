@@ -1,7 +1,8 @@
 import Grid from "@material-ui/core/Grid";
-import TurretView from "./components/TurretView/turretview";
+import RobotView from "./components/RobotView/robotview";
+import AttachmentView from "./components/AttachmentView/attachmentview";
 import TurretControls from "./components/TurretControls/turretcontrols";
-import AutoAim from "./components/AutoAim/autoaim";
+import DriveControls from "./components/DriveControls/drivecontrols";
 import Mqtt from "mqtt";
 import React, { Component } from "react";
 import Config from "./config.json";
@@ -40,7 +41,7 @@ class App extends Component {
 
           <Grid item xs={1} />
           <Grid item xs={10}>
-            <TurretView />
+            <RobotView />
           </Grid>
           <Grid item xs={1} />
 
@@ -48,8 +49,11 @@ class App extends Component {
           <Grid item xs={3}>
             <TurretControls mqttClient={this.state.mqttClient} />
           </Grid>
-          <Grid item xs={7}>
-            <AutoAim />
+          <Grid item xs={4}>
+            <AttachmentView />
+          </Grid>
+          <Grid item xs={3}>
+            <DriveControls mqttClient={this.state.mqttClient} />
           </Grid>
           <Grid item xs={1} />
 
