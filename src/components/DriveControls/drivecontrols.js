@@ -30,21 +30,32 @@ class DriveControls extends Component {
     }
   }
 
-  translateY = (diry, force) => {
+  translateMotion = (dirx, diry, force, angle) => {
+    // /---\
+    // |   | = 0-359  
+    // \___/
+    const output = [0, 0, 0, 0];
+    const angleNorm = Math.round(Math.min(angle, 360));
     const forcePerc = Math.round(Math.min(force, 1) * 100);
+
     if (forcePerc > 10) {
 
       if (diry.toLowerCase() === "up") {
-        console.log(" 1, 1");
-        return;
+        output[0] = 1;
+        output[1] = 1;
       } else if (diry.toLowerCase() === "down") {
-        console.log("-1,-1");
-        return;
+        output[0] = -1;
+        output[1] = -1;
+      } else {
+        output[0] = 0;
+        output[1] = 0;
       }
 
-      console.log(" 0, 0");
-      return;
+      
+      
     }
+    console.log(`${output} - ${angleNorm}`);
+    return;
   }
 
   handleMove = (event, data) => {
@@ -52,8 +63,7 @@ class DriveControls extends Component {
     const diry = data.direction ? data.direction.y : "";
     const force = data.force;
     const angle = data.angle.degree;
-    this.translateY(diry, force);
-    console.log(`${dirx} - ${diry} - ${force} - ${angle}`);
+    this.translateMotion(dirx, diry, force, angle);
   }
 
   render() {

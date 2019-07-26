@@ -11,7 +11,7 @@ class robotControl:
     self.leftPWMChannel     = leftPWMChannel
     self.rightPWMChannel     = rightPWMChannel
 
-    # instantiate a Servo object for both pan and tilt
+    # instantiate an hBridge object for both sides
     self.leftMotors = beagleMotors.hBridgeMotor(leftFWDChannel, leftRWDChannel, leftPWMChannel)
     self.rightMotors = beagleMotors.hBridgeMotor(rightFWDChannel, rightRWDChannel, rightPWMChannel)
 
@@ -23,15 +23,9 @@ class robotControl:
       self.leftMotors.setupMaxDuty(maxPWM)
       self.rightMotors.setupMaxDuty(maxPWM)
 
-    # pan and tilt angles set directly based on input values
+    # get values for hBridge sides
     def move(self, leftDirection, rightDirection, leftSpeedPercentage, RightSpeedPercentage):
       print "Moving (%d, %d), with Speed % (%d, %d)"%(int(leftDirection), int(rightDirection), int(leftSpeedPercentage), int(RightSpeedPercentage))
-      return 0
-
-    def turnLeft(self, speedPercentage):
-      return 0
-
-    def turnRight(self, speedPercentage):
       return 0
 
     def spinLeft(self, speedPercentage):

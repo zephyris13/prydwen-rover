@@ -4,10 +4,6 @@ import Adafruit_BBIO.PWM as PWM
 
 __version__ = "0.1"
 
-
-H_BRIDGE_MOTOR_FORWARD 	= 0
-H_BRIDGE_MOTOR_REVERSE 	= 1
-
 class hBridgeMotor:
 	"""Class that two digital signals and a pwm signal to control an h-bridge"""
 
@@ -22,7 +18,7 @@ class hBridgeMotor:
 		self.maxDuty		= 100
 
     GPIO.setup(self.fwdChannel, GPIO.OUT)
-    GPIO.setup(self.revChannel, GPIO.OUT)
+    GPIO.setup(self.rwdChannel, GPIO.OUT)
 
     PWM.start(pwmChannel, 0)
     GPIO.output(self.fwdChannel, GPIO.LOW)
@@ -43,20 +39,23 @@ class hBridgeMotor:
     GPIO.output(self.fwdChannel, GPIO.LOW)
     GPIO.output(self.rwdChannel, GPIO.LOW)
 
-		return 0
+	def forward(self, duty):
+		PWM.set_duty_cycle(self.pwmChannel, duty)
+		GPIO.output(self.fwdChannel, GPIO.HIGH)
+		GPIO.output(self.rwdChannel, GPIO.LOW)
 
-	def spin(self, direction, duty):
+	def reverse(self, duty):
+		PWM.set_duty_cycle(self.pwmChannel, duty)
+		GPIO.output(self.fwdChannel, GPIO.LOW)
+		GPIO.output(self.rwdChannel, GPIO.HIGH)
+
+	def spin(self, direction, dutyPercentage):
 		"""Set the PWM to the specified duty, and in the specified direction"""
 
-		# 0 - forward, 1 - reverse
-		# if (direction == H_BRIDGE_MOTOR_FORWARD):
-		# 	self.revDriver.turnOff()
-		# 	self.fwdDriver.turnOn()
-		# elif (direction == H_BRIDGE_MOTOR_REVERSE):
-		# 	self.fwdDriver.turnOff()
-		# 	self.revDriver.turnOn()
-		# else:
-		# 	return -1
+		# direction forward = 1 / stop = 0 / reverse = -1
+
+		dutyRatio = (self.maxDuty - self.minDuty) / 100
+		duty = dutyRatio * dutyPercentage
 
 			# check against the minimum and maximium pwm
     if duty < self.minDuty:
@@ -64,15 +63,11 @@ class hBridgeMotor:
     elif duty > self.maxDuty:
       duty 	= self.maxDuty
 
-    # program the duty cycle
-    PWM.set_duty_cycle(self.pwmChannel, duty)
-
+		if direction == 1:
+			self.forward(duty)
+		elif direction == -1:
+			self.reverse(duty)
+		else direction == 0:
+			self.reset
+		
 		return 0
-
-	def spinForward(self, duty):
-		ret 	= self.spin(H_BRIDGE_MOTOR_FORWARD, duty)
-		return ret
-
-	def spinReverse(self, duty):
-		ret 	= self.spin(H_BRIDGE_MOTOR_REVERSE, duty)
-		return ret
