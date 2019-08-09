@@ -31,12 +31,15 @@ class DriveControls extends Component {
   }
 
   translateMotion = (dirx, diry, force, angle) => {
-    // /---\
-    // |   | = 0-359  
-    // \___/
+    //      90
+    //     /---\
+    // 180 |   | = 0-360  
+    //     \___/
+    //      270
     const output = [0, 0, 0, 0];
     const angleNorm = Math.round(Math.min(angle, 360));
     const forcePerc = Math.round(Math.min(force, 1) * 100);
+    let turningRatio = 0;
 
     if (forcePerc > 10) {
 
@@ -51,8 +54,24 @@ class DriveControls extends Component {
         output[1] = 0;
       }
 
-      
-      
+      // quadrants
+      if (0 < angleNorm < 90) {
+        // Right Quadrant Top
+        turningRatio = angleNorm / 90;
+        output[2] = turningRatio;
+      // } else if (270 < angleNorm < 360 ) {
+      //   // Right Quadrant Bottom
+      //   turningRatio = (angleNorm - 270) / 90;
+      //   output[2] = turningRatio;
+      // } else if (90 < angleNorm < 180) {
+      //   // Left Quadrant Top
+      //   turningRatio = (angleNorm - 90) / 90;
+      //   output[3] = turningRatio;
+      // } else if (180 < angleNorm < 270) {
+      //   // Left Quadrant Bottom
+      //   turningRatio = (angleNorm - 180) / 90;
+      //   output[3] = turningRatio;
+      }
     }
     console.log(`${output} - ${angleNorm}`);
     return;
