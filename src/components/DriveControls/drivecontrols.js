@@ -55,22 +55,26 @@ class DriveControls extends Component {
       }
 
       // quadrants
-      if (0 < angleNorm < 90) {
+      if (0 < angleNorm && angleNorm < 90) {
         // Right Quadrant Top
         turningRatio = angleNorm / 90;
+        output[3] = turningRatio;
+        output[2] = 1;
+      } else if (270 < angleNorm && angleNorm < 360 ) {
+        // Right Quadrant Bottom
+        turningRatio = (angleNorm - 270) / 90;
+        output[3] = 1 - turningRatio;
+        output[2] = 1;
+      } else if (90 < angleNorm && angleNorm < 180) {
+        // Left Quadrant Top
+        turningRatio = (angleNorm - 90) / 90;
+        output[2] = 1 - turningRatio;
+        output[3] = 1;
+      } else if (180 < angleNorm && angleNorm < 270) {
+        // Left Quadrant Bottom
+        turningRatio = (angleNorm - 180) / 90;
         output[2] = turningRatio;
-      // } else if (270 < angleNorm < 360 ) {
-      //   // Right Quadrant Bottom
-      //   turningRatio = (angleNorm - 270) / 90;
-      //   output[2] = turningRatio;
-      // } else if (90 < angleNorm < 180) {
-      //   // Left Quadrant Top
-      //   turningRatio = (angleNorm - 90) / 90;
-      //   output[3] = turningRatio;
-      // } else if (180 < angleNorm < 270) {
-      //   // Left Quadrant Bottom
-      //   turningRatio = (angleNorm - 180) / 90;
-      //   output[3] = turningRatio;
+        output[3] = 1;
       }
     }
     console.log(`${output} - ${angleNorm}`);
