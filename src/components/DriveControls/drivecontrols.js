@@ -30,13 +30,13 @@ class DriveControls extends Component {
     }
   }
 
-  translateMotion = (dirx, diry, force, angle) => {
+  translateMotion = (diry, force, angle) => {
     //      90
     //     /---\
     // 180 |   | = 0-360  
     //     \___/
     //      270
-    const output = [0, 0, 0, 0];
+    var output = [0, 0, 0, 0];
     const angleNorm = Math.round(Math.min(angle, 360));
     const forcePerc = Math.round(Math.min(force, 1) * 100);
     let turningRatio = 0;
@@ -77,16 +77,29 @@ class DriveControls extends Component {
         output[3] = 1;
       }
     }
-    console.log(`${output} - ${angleNorm}`);
-    return;
+
+    output[2] = Math.round(output[2] * 100);
+    output[3] = Math.round(output[3] * 100);
+
+    output[2] = Math.round((forcePerc / 100) * output[2]);
+    output[3] = Math.round((forcePerc / 100) * output[3]);
+    
+    return output;
   }
 
   handleMove = (event, data) => {
-    const dirx = data.direction ? data.direction.x : "";
-    const diry = data.direction ? data.direction.y : "";
-    const force = data.force;
-    const angle = data.angle.degree;
-    this.translateMotion(dirx, diry, force, angle);
+    var output = [0, 0, 0, 0];
+
+    if (event.type !== "end") {
+      const diry = data.direction ? data.direction.y : "";
+      const force = data.force;
+      const angle = data.angle.degree;
+      output = this.translateMotion(diry, force, angle);
+    } else {
+      output = [0, 0, 0, 0];
+    }
+
+    console.log(`${output}`);
   }
 
   render() {
@@ -106,6 +119,7 @@ class DriveControls extends Component {
                       margin: '0 auto'
                   }}
                   onMove={(evt, data) => this.handleMove(evt, data)}
+                  onEnd={(evt, data) => this.handleMove(evt, data)}
               />
             </Grid>
             <Grid item xs={12} />
