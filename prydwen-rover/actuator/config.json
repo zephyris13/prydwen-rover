@@ -1,5 +1,5 @@
 {
-  "server": "127.0.0.1",
+  "server": "localhost",
   "port": 1883,
   "topicA": "prydwenrover/controls/movement",
   "leftFWDChannel": "P8_10",

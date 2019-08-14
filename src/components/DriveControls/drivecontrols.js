@@ -33,7 +33,7 @@ class DriveControls extends Component {
   translateMotion = (diry, force, angle) => {
     //      90
     //     /---\
-    // 180 |   | = 0-360  
+    // 180 |   | = 0-360
     //     \___/
     //      270
     var output = [0, 0, 0, 0];
@@ -83,7 +83,7 @@ class DriveControls extends Component {
 
     output[2] = Math.round((forcePerc / 100) * output[2]);
     output[3] = Math.round((forcePerc / 100) * output[3]);
-    
+
     return output;
   }
 
@@ -99,7 +99,7 @@ class DriveControls extends Component {
       output = [0, 0, 0, 0];
     }
 
-    console.log(`${output}`);
+    this.props.mqttClient.publish(Config["topicA"], `${output[0]} ${output[1]} ${output[2]} ${output[3]}`);
   }
 
   render() {
@@ -129,5 +129,5 @@ class DriveControls extends Component {
       );
     }
   }
-  
+
   export default DriveControls;

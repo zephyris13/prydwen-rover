@@ -1,9 +1,9 @@
 {
-  "device_host": "192.168.0.58",
-  "camera_host": "127.0.0.1",
+  "device_host": "localhost",
+  "camera_host": "localhost",
   "camera_port": 8080,
   "mqtt_port": 9001,
-  "topicA": "controls/pan-tilt",
+  "topicA": "prydwenrover/controls/movement",
   "topicB": "controls/spool-up",
   "topicC": "controls/fire"
 }
