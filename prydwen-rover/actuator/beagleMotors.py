@@ -15,7 +15,7 @@ class hBridgeMotor:
 		self.pwmChannel 	= pwmChannel
 
 		# setup the limitations
-		self.minDuty 		= 0
+		self.minDuty		= 0
 		self.maxDuty		= 100
 
 		GPIO.setup(self.fwdChannel, GPIO.OUT)
@@ -27,11 +27,11 @@ class hBridgeMotor:
 
 	def setupMinDuty(self, duty):
 		"""Set the minimum allowed duty cycle for pwm"""
-		self.minDuty 		= duty
+		self.minDuty		= duty
 
 	def setupMaxDuty(self, duty):
 		"""Set the maximum allowed duty cycle for pwm"""
-		self.maxDuty 		= duty
+		self.maxDuty		= duty
 
 	def reset(self):
 		"""Set the PWM to 0%, disable both h-bridge controls"""
