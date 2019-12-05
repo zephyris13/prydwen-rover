@@ -13,16 +13,16 @@ class robotControl:
     self.rightPWMChannel     = rightPWMChannel
 
     GPIO.setup(self.leftFWDChannel, GPIO.OUT)
-		GPIO.setup(self.leftRWDChannel, GPIO.OUT)
+    GPIO.setup(self.leftRWDChannel, GPIO.OUT)
     GPIO.setup(self.rightFWDChannel, GPIO.OUT)
-		GPIO.setup(self.rightRWDChannel, GPIO.OUT)
+    GPIO.setup(self.rightRWDChannel, GPIO.OUT)
 
-		PWM.start(leftPWMChannel, 0)
+    PWM.start(leftPWMChannel, 0)
     PWM.start(rightPWMChannel, 0)
     GPIO.output(self.leftFWDChannel, GPIO.LOW)
-		GPIO.output(self.leftRWDChannel, GPIO.LOW)
-		GPIO.output(self.rightFWDChannel, GPIO.LOW)
-		GPIO.output(self.rightRWDChannel, GPIO.LOW)
+    GPIO.output(self.leftRWDChannel, GPIO.LOW)
+    GPIO.output(self.rightFWDChannel, GPIO.LOW)
+    GPIO.output(self.rightRWDChannel, GPIO.LOW)
 
     if minPWM:
       self.setupMinDuty(minPWM)
@@ -35,17 +35,17 @@ class robotControl:
       self.setupMaxDuty(100)
 
   def setupMinDuty(self, duty):
-		"""Set the minimum allowed duty cycle for pwm"""
-		self.minDuty 		= duty
+    """Set the minimum allowed duty cycle for pwm"""
+    self.minDuty 		= duty
 
-	def setupMaxDuty(self, duty):
-		"""Set the maximum allowed duty cycle for pwm"""
-		self.maxDuty 		= duty
+  def setupMaxDuty(self, duty):
+    """Set the maximum allowed duty cycle for pwm"""
+    self.maxDuty 		= duty
 
   def calculateDuty(self, dutyPercentage):
     dutyRange = self.maxDuty - self.minDuty
-  	dutyRatio = (dutyPercentage * dutyRange)
-		duty = (dutyRatio / 100) + self.minDuty
+    dutyRatio = (dutyPercentage * dutyRange)
+    duty = (dutyRatio / 100) + self.minDuty
 
     return duty
 
@@ -57,7 +57,7 @@ class robotControl:
     self.spin('left', leftDirection, leftDuty)
     self.spin('right', rightDirection, rightDuty)
 
-	def spin(self, channel, direction, duty):
+  def spin(self, channel, direction, duty):
     if direction == -1:
       if channel == 'left':
         self.forward(self.leftPWMChannel, self.leftFWDChannel, self.leftRWDChannel, duty)
@@ -78,15 +78,15 @@ class robotControl:
 
   def forward(self, pwmChannel, fwdChannel, rwdChannel, duty):
     PWM.set_duty_cycle(pwmChannel, duty)
-		GPIO.output(fwdChannel, GPIO.HIGH)
-		GPIO.output(rwdChannel, GPIO.LOW)
+    GPIO.output(fwdChannel, GPIO.HIGH)
+    GPIO.output(rwdChannel, GPIO.LOW)
 
   def reverse(self, pwmChannel, fwdChannel, rwdChannel, duty):
     PWM.set_duty_cycle(pwmChannel, duty)
-		GPIO.output(fwdChannel, GPIO.LOW)
-		GPIO.output(rwdChannel, GPIO.HIGH)
+    GPIO.output(fwdChannel, GPIO.LOW)
+    GPIO.output(rwdChannel, GPIO.HIGH)
   
   def stop(self, pwmChannel, fwdChannel, rwdChannel):
     PWM.set_duty_cycle(pwmChannel, 0)
-		GPIO.output(fwdChannel, GPIO.LOW)
-		GPIO.output(rwdChannel, GPIO.LOW)
+    GPIO.output(fwdChannel, GPIO.LOW)
+    GPIO.output(rwdChannel, GPIO.LOW)
