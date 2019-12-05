@@ -41,7 +41,6 @@ class App extends Component {
 
           <Grid item xs={1} />
           <Grid item xs={10}>
-            <RobotView />
           </Grid>
           <Grid item xs={1} />
 
