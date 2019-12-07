@@ -13,7 +13,7 @@ class RobotView extends Component {
     return (
       <Paper className="Video">
         <p>Robot View</p>
-        <img style={{ paddingBottom: "20px" }} src={this.state.cameraUrl} alt={this.state.cameraUrl} />
+        <img style={{ paddingBottom: "20px", width: "90%" }} src={this.state.cameraUrl} alt={this.state.cameraUrl} />
       </Paper>
     );
   }

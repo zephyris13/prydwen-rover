@@ -1,6 +1,5 @@
 import Grid from "@material-ui/core/Grid";
 import RobotView from "./components/RobotView/robotview";
-import AttachmentView from "./components/AttachmentView/attachmentview";
 import TurretControls from "./components/TurretControls/turretcontrols";
 import DriveControls from "./components/DriveControls/drivecontrols";
 import Mqtt from "mqtt";
@@ -38,18 +37,12 @@ class App extends Component {
     return (
       <div className="App App-background">
         <Grid container spacing={24}>
-
-          <Grid item xs={1} />
-          <Grid item xs={10}>
-          </Grid>
-          <Grid item xs={1} />
-
           <Grid item xs={1} />
           <Grid item xs={3}>
             <TurretControls mqttClient={this.state.mqttClient} />
           </Grid>
           <Grid item xs={4}>
-            <AttachmentView />
+            <RobotView />
           </Grid>
           <Grid item xs={3}>
             <DriveControls mqttClient={this.state.mqttClient} />
