@@ -1,7 +1,9 @@
 {
   "server": "localhost",
   "port": 1883,
+  "lidarPort":"/dev/ttyUSB0",
   "topicA": "prydwenrover/controls/movement",
+  "topicB": "prydwenrover/lidar/data",
   "leftFWDChannel": "P8_10",
   "leftRWDChannel": "P8_12",
   "rightFWDChannel": "P8_14",

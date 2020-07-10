@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import RobotView from "./components/RobotView/robotview";
-import TurretControls from "./components/TurretControls/turretcontrols";
+import MqttMonitor from "./components/MqttMonitor/mqttMonitor";
 import DriveControls from "./components/DriveControls/drivecontrols";
 import Mqtt from "mqtt";
 import React, { Component } from "react";
@@ -24,6 +24,18 @@ class App extends Component {
       this.setState({
         mqttClient: client
       });
+      
+      client.subscribe(Config["topicB"], function (err) {
+        if (err) {
+          console.log(err.toString());
+        }
+      })
+    })
+
+    client.on("message", function (topic, message) {
+      if (topic === Config["topicB"]) {
+        console.log(message.toString());
+      }
     })
 
     client.on("close", () => {
@@ -39,7 +51,7 @@ class App extends Component {
         <Grid container spacing={24}>
           <Grid item xs={1} />
           <Grid item xs={3}>
-            <TurretControls mqttClient={this.state.mqttClient} />
+            <MqttMonitor mqttClient={this.state.mqttClient} />
           </Grid>
           <Grid item xs={4}>
             <RobotView />

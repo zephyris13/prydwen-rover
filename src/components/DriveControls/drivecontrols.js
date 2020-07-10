@@ -11,23 +11,7 @@ class DriveControls extends Component {
     super(props);
     this.state = {
       mqttClient: props.mqttClient,
-      DriveControlsChecked: false,
-      mqttConnected: false
     };
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.mqttClient !== this.props.mqttClient
-        && this.props.mqttClient !== undefined
-        && !this.setState.mqttConnected) {
-      this.setState({ mqttConnected: true });
-      console.log("Mqtt connected!");
-    }
-    else if (this.props.mqttClient === undefined
-      && this.setState.mqttConnected) {
-      this.setState({ mqttConnected: false });
-      console.log("Mqtt disconnected");
-    }
   }
 
   translateMotion = (diry, force, angle) => {
@@ -129,5 +113,9 @@ class DriveControls extends Component {
       );
     }
   }
+
+  DriveControls.propTypes = {
+    mqttClient: PropTypes.object
+  };
 
   export default DriveControls;

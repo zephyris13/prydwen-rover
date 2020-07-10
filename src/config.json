@@ -4,6 +4,6 @@
   "camera_port": 8090,
   "mqtt_port": 9001,
   "topicA": "prydwenrover/controls/movement",
-  "topicB": "controls/spool-up",
+  "topicB": "prydwenrover/lidar/data",
   "topicC": "controls/fire"
 }

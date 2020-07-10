@@ -4,7 +4,10 @@ import json
 import getopt
 import paho.mqtt.client as mqtt
 
+sys.path.append('./lidar/')
+
 import robotControl
+import lidarController
 
 
 # variables
@@ -41,9 +44,14 @@ def __main__():
 	# setup mqtt
 	mqttc = mqtt.Client()
 	try:
+		print("Initialised")
 		robot = robotControl.robotControl(config['leftFWDChannel'], config['leftRWDChannel'], config['rightFWDChannel'], config['rightRWDChannel'], config['leftPWMChannel'], config['rightPWMChannel'], config['minPWM'], config['maxPWM'])
-	except:
-		print("ERROR: config file must contain settings for 'leftFWDChannel', 'leftRWDChannel', 'rightFWDChannel', 'rightRWDChannel', 'leftPWMChannel', and 'rightPWMChannel'")
+		print("Robot Controller Ready...")
+		lidar = lidarController.lidarController(mqttc, config['topicB'], config['lidarPort'])
+		print("Lidar Controller Ready...")
+		
+	except Exception, e:
+		print(str(e))
 		sys.exit(2)
 
 	# define the mqtt callbacks
@@ -55,7 +63,7 @@ def __main__():
 
 	def on_message(client, userdata, msg):
 		if msg.payload:
-			#print(msg.topic + ":: payload is " + str(msg.payload))
+			print(msg.topic + ":: payload is " + str(msg.payload))
 			handleMessage(msg.topic, msg.payload)
 
 	def on_subscribe(client, userdata, mid, granted_qos):
